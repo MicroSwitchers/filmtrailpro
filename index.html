@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Film Photography Notes</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo-title-container">
+                <div class="logo-container">
+                    <img src="tlrlogo.png" alt="TLR Logo">
+                </div>
+                <h1>Film Photography Notes</h1>
+            </div>
+            <div class="current-date" id="current-date"></div>
+            <div class="file-actions">
+                <button onclick="saveNotes()">Save Notes</button>
+                <button onclick="document.getElementById('load-file').click()">Load Notes</button>
+                <input type="file" id="load-file" style="display: none;" onchange="loadNotesFromFile(event)">
+            </div>
+        </header>
+        
+        <div class="main-content">
+            <div id="film-rolls"></div>
+            
+            <button class="add-roll" onclick="addFilmRoll()">Add New Film Roll</button>
+        </div>
+    </div>
+
+    <template id="roll-template">
+        <div class="film-roll">
+            <div class="roll-header">
+                <div class="roll-info">
+                    <div class="roll-title" onclick="toggleRollContent({rollIndex})">Roll {rollNumber}</div>
+                    <div class="roll-details">
+                        <div class="roll-main-info" id="roll-main-info-{rollIndex}"></div>
+                        <div class="roll-sub-info" id="roll-sub-info-{rollIndex}"></div>
+                    </div>
+                </div>
+                <button class="delete-btn" onclick="deleteRoll({rollIndex})">Delete Roll</button>
+            </div>
+            <div class="drawer">
+                <button id="drawer-toggle-{rollIndex}" class="drawer-toggle" onclick="toggleDrawer({rollIndex})">Film / Camera / Lens Details</button>
+                <div class="drawer-content" id="drawer-content-{rollIndex}">
+                    <div class="tab-container">
+                        <div class="tab active" onclick="openTab(event, 'film-info-{rollIndex}')">Film Information</div>
+                        <div class="tab" onclick="openTab(event, 'camera-info-{rollIndex}')">Camera Information</div>
+                        <div class="tab" onclick="openTab(event, 'lens-info-{rollIndex}')">Lens Information</div>
+                    </div>
+
+                    <div class="tab-content active" id="film-info-{rollIndex}">
+                        <div class="film-info">
+                            <input id="company-{rollIndex}" list="company-datalist" placeholder="Film Company" onchange="updateRollInfo({rollIndex}, 'company', this.value)">
+                            <datalist id="company-datalist">
+                                <option value="Kodak">
+                                <option value="Fujifilm">
+                                <option value="Ilford">
+                                <option value="Lomography">
+                                <option value="CineStill">
+                                <option value="Fomapan">
+                                <option value="Rollei">
+                                <option value="Agfa">
+                            </datalist>
+                            <input id="film-stock-{rollIndex}" type="text" placeholder="Film Stock" onchange="updateRollInfo({rollIndex}, 'stock', this.value)">
+                            <input id="iso-{rollIndex}" list="iso-datalist" placeholder="ISO" onchange="updateRollInfo({rollIndex}, 'iso', this.value)">
+                            <datalist id="iso-datalist">
+                                <option value="50">
+                                <option value="100">
+                                <option value="125">
+                                <option value="200">
+                                <option value="400">
+                                <option value="800">
+                                <option value="1600">
+                                <option value="3200">
+                            </datalist>
+                            <input id="format-{rollIndex}" list="format-datalist" placeholder="Format" onchange="updateRollInfo({rollIndex}, 'format', this.value)">
+                            <datalist id="format-datalist">
+                                <option value="110">
+                                <option value="35mm">
+                                <option value="Polaroid">
+                                <option value="120">
+                                <option value="220">
+                                <option value="4x5">
+                                <option value="8x10">
+                            </datalist>
+                        </div>
+                    </div>
+
+                    <div class="tab-content" id="camera-info-{rollIndex}">
+                        <div class="camera-info">
+                            <input id="camera-brand-{rollIndex}" list="camera-brand-datalist" placeholder="Camera Brand" onchange="updateRollInfo({rollIndex}, 'cameraBrand', this.value)">
+                            <datalist id="camera-brand-datalist">
+                                <option value="Bronica">
+                                <option value="Contax">
+                                <option value="Fujifilm">
+                                <option value="Holga">
+                                <option value="Konica">
+                                <option value="Polaroid">
+                                <option value="Ricoh">
+                                <option value="Vivitar">
+                            </datalist>
+                            <input id="camera-model-{rollIndex}" type="text" placeholder="Camera Model" onchange="updateRollInfo({rollIndex}, 'cameraModel', this.value)">
+                        </div>
+                    </div>
+
+                    <div class="tab-content" id="lens-info-{rollIndex}">
+                        <div class="lens-info">
+                            <input id="lens-brand-{rollIndex}" list="lens-brand-datalist" placeholder="Lens Brand">
+                            <datalist id="lens-brand-datalist">
+                                <option value="Canon">
+                                <option value="Nikon">
+                                <option value="Pentax">
+                                <option value="Olympus">
+                                <option value="Minolta">
+                                <option value="Leica">
+                                <option value="Mamiya">
+                                <option value="Hasselblad">
+                                <option value="Zeiss">
+                                <option value="Schneider">
+                                <option value="Konica">
+                                <option value="Other Lens">
+                            </datalist>
+                            <input id="lens-fstop-{rollIndex}" type="text" placeholder="f/" oninput="prefixInput(this, 'f/')">
+                            <input id="lens-focal-{rollIndex}" type="text" placeholder="mm" onfocus="ensureSuffix(this, 'mm')" oninput="handleFocalInput(this)">
+                            <div class="lens-confirm">
+                                <button onclick="confirmLens({rollIndex})">Confirm Lens</button>
+                            </div>
+                        </div>
+                        <div id="lens-tags-{rollIndex}" class="tag-input-container"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="frames-drawer">
+                <button id="frames-drawer-toggle-{rollIndex}" class="drawer-toggle" onclick="toggleFramesDrawer({rollIndex})">Show Frames</button>
+                <div class="drawer-content" id="frames-drawer-content-{rollIndex}">
+                    <div class="frames-container">
+                        <div class="frames-header">
+                            <div class="frames-title">Frames <span id="frame-count-{rollIndex}">(0)</span></div>
+                            <button onclick="addFrame({rollIndex})">Add Frame</button>
+                        </div>
+                        <div id="frames-{rollIndex}"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <footer class="footer">
+        <p>Version 1 -Created by Niall Brown with the use of AI. Logo by DALL·E. This app does not save any data automatically. The information will be lost on closing. Saving a .json file will allow you to reload the file back into the same version of the app.</p>
+    </footer>
+
+    <script src="scripts.js"></script>
+</body>
+</html>

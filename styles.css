@@ -1,0 +1,434 @@
+:root {
+    --primary-color: #2171ac;
+    --primary-light: #3498db;
+    --primary-dark: #18517d;
+    --secondary-color: #ffffff;
+    --accent-color: #e74c3c;
+    --success-color: #2ecc71;
+    --background-color: #1c1c1c;
+    --card-color: #2c2c2c;
+    --text-color: #f0f0f0;
+    --input-background-color: #333333;
+    --input-border-color: #555555;
+    --button-background-color: #2171ac;
+    --button-hover-color: #3498db;
+    --button-text-color: #ffffff;
+    --delete-button-background-color: #e74c3c;
+    --delete-button-hover-color: #c0392b;
+    --add-button-background-color: #2ecc71;
+    --add-button-hover-color: #27ae60;
+    --tag-background-colors: #e74c3c, #3498db, #2ecc71, #f39c12, #9b59b6;
+    --tag-text-color: #ffffff;
+    --tag-remove-color: #ffffff;
+    --border-radius: 8px;
+    --input-padding: 10px;
+    --input-font-size: 14px;
+    --header-height: 80px;
+    --header-background: linear-gradient(135deg, #34495e, #2c3e50);
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: var(--card-color);
+    border-radius: var(--border-radius);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--header-background);
+    padding: 0 30px;
+    height: var(--header-height);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.logo-title-container {
+    display: flex;
+    align-items: center;
+}
+
+.logo-container {
+    margin-right: 20px;
+}
+
+.logo-container img {
+    max-height: 60px;
+    width: auto;
+    border-radius: var(--border-radius);
+}
+
+h1 {
+    color: var(--secondary-color);
+    font-size: 2.2em;
+    margin: 0;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.file-actions {
+    display: flex;
+    gap: 15px;
+}
+
+.main-content {
+    padding: 30px;
+}
+
+.film-roll {
+    background-color: var(--card-color);
+    border: 1px solid var(--input-border-color);
+    padding: 20px;
+    margin-bottom: 30px;
+    border-radius: var(--border-radius);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.roll-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid var(--primary-color);
+    background-color: var(--card-color);
+    padding: 20px;
+    border-radius: var(--border-radius) var(--border-radius) 0 0;
+}
+
+.roll-info {
+    display: flex;
+    align-items: baseline;
+}
+
+.roll-title {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: var(--primary-color);
+    margin-right: 15px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.roll-title:hover {
+    color: var(--primary-light);
+}
+
+.roll-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.roll-main-info, .roll-sub-info {
+    font-size: 1em;
+    color: var(--secondary-color);
+}
+
+.roll-sub-info {
+    opacity: 0.9;
+    font-size: 0.9em;
+}
+
+.drawer {
+    margin-bottom: 20px;
+}
+
+.drawer-toggle {
+    width: 100%;
+    padding: 15px;
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    border: none;
+    border-radius: var(--border-radius);
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.drawer-toggle:hover {
+    background-color: var(--primary-light);
+}
+
+.drawer-toggle::after {
+    content: '\25BC';
+    font-size: 12px;
+    transition: transform 0.3s ease;
+}
+
+.drawer-toggle.open::after {
+    transform: rotate(180deg);
+}
+
+.drawer-content {
+    display: none;
+    padding: 20px;
+    background-color: var(--input-background-color);
+    border-radius: 0 0 var(--border-radius) var(--border-radius);
+    margin-top: -5px;
+}
+
+.drawer-content.open {
+    display: block;
+}
+
+.frames-drawer {
+    margin-top: 20px;
+}
+
+.frames-drawer .drawer-toggle {
+    background-color: var(--primary-dark);
+}
+
+.frames-drawer .drawer-toggle:hover {
+    background-color: var(--primary-color);
+}
+
+.frames-drawer .drawer-content {
+    background-color: var(--card-color);
+    border: 1px solid var(--primary-color);
+}
+
+.tab-container {
+    display: flex;
+    border-bottom: 2px solid var(--primary-color);
+    margin-bottom: 20px;
+}
+
+.tab {
+    padding: 10px 20px;
+    cursor: pointer;
+    background-color: var(--card-color);
+    color: var(--text-color);
+    border: 2px solid var(--primary-color);
+    border-bottom: none;
+    border-radius: var(--border-radius) var(--border-radius) 0 0;
+    margin-right: 10px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.tab:hover {
+    background-color: var(--primary-light);
+    color: var(--secondary-color);
+}
+
+.tab.active {
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.film-info, .camera-info, .lens-info {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.lens-confirm {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.tag-input-container {
+    display: none;
+    flex-wrap: wrap;
+    align-items: center;
+    background-color: var(--input-background-color);
+    padding: 5px;
+    border-radius: var(--border-radius);
+    margin-bottom: 15px;
+}
+
+.tag-input-container.active {
+    display: flex;
+}
+
+.tag {
+    display: inline-flex;
+    align-items: center;
+    background-color: var(--tag-background-color);
+    color: var(--tag-text-color);
+    padding: 5px 10px;
+    border-radius: var(--border-radius);
+    margin-right: 5px;
+    margin-bottom: 5px;
+    font-size: 0.9em;
+}
+
+.tag span {
+    margin-right: 5px;
+}
+
+.tag-remove {
+    cursor: pointer;
+    color: var(--tag-remove-color);
+}
+
+.frames-container {
+    margin-top: 20px;
+}
+
+.frames-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.frames-title {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: var(--secondary-color);
+}
+
+.frame {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 15px;
+    padding: 10px;
+    background-color: var(--input-background-color);
+    border-radius: var(--border-radius);
+    position: relative;
+    transition: box-shadow 0.3s ease;
+}
+
+.frame:hover {
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.frame label {
+    grid-column: 1 / -1;
+    color: var(--secondary-color);
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+input, select {
+    width: 100%;
+    padding: var(--input-padding);
+    border: 1px solid var(--input-border-color);
+    border-radius: var(--border-radius);
+    font-size: var(--input-font-size);
+    box-sizing: border-box;
+    background-color: var(--input-background-color);
+    color: var(--text-color);
+}
+
+input:focus, select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(33, 113, 172, 0.5);
+}
+
+button {
+    background-color: var(--button-background-color);
+    color: var(--button-text-color);
+    padding: 10px 20px;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease, transform 0.1s ease;
+}
+
+button:hover {
+    background-color: var(--button-hover-color);
+    transform: translateY(-2px);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+.delete-btn {
+    background-color: var(--delete-button-background-color);
+}
+
+.delete-btn:hover {
+    background-color: var(--delete-button-hover-color);
+}
+
+.add-roll {
+    display: block;
+    width: 100%;
+    margin-top: 20px;
+    background-color: var(--add-button-background-color);
+    color: var(--secondary-color);
+    font-weight: bold;
+}
+
+.add-roll:hover {
+    background-color: var(--add-button-hover-color);
+}
+
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        height: auto;
+        padding: 20px;
+    }
+
+    .logo-title-container {
+        margin-bottom: 15px;
+    }
+
+    .file-actions {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .film-info, .camera-info, .lens-info, .frame {
+        grid-template-columns: 1fr;
+    }
+    
+    .roll-info {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .roll-title {
+        margin-right: 0;
+        margin-bottom: 5px;
+    }
+    
+    .lens-confirm {
+        grid-column: 1;
+    }
+}
+
+.footer {
+    background-color: var(--card-color);
+    color: var(--text-color);
+    text-align: center;
+    padding: 10px;
+    margin-top: 20px;
+    border-top: 1px solid var(--input-border-color);
+    font-size: 0.9em;
+}
